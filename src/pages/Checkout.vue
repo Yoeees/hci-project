@@ -1,56 +1,241 @@
 <!-- src/pages/Checkout.vue -->
 <template>
-  <div class="py-12 bg-gray-50 min-h-screen">
+  <div class="py-16 bg-gradient-to-b from-gray-50 to-white min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-bold text-center text-gray-900 mb-12">Checkout</h1>
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <!-- Order Summary -->
-        <div class="bg-white rounded-lg shadow p-8">
-          <h2 class="text-2xl font-bold mb-6">Order Summary</h2>
-          <div class="space-y-6 mb-8">
-            <div v-for="item in cartItems" :key="item.id" class="flex justify-between">
-              <div>
-                <p class="font-medium">{{ item.title }}</p>
-                <p class="text-sm text-gray-600">Quantity: {{ item.quantity }}</p>
-              </div>
-              <p class="font-medium">₱{{ (item.price * item.quantity).toFixed(2) }}</p>
+      <div class="text-center mb-12">
+        <h1 class="text-5xl font-extrabold text-gray-900 mb-4">Secure Checkout</h1>
+        <p class="text-xl text-gray-600">Complete your order in just a few steps</p>
+      </div>
+
+      <!-- Progress Steps -->
+      <div class="max-w-3xl mx-auto mb-12">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg">
+              ✓
             </div>
+            <span class="font-semibold text-gray-900">Cart</span>
           </div>
-          <div class="border-t pt-6">
-            <div class="flex justify-between text-xl font-bold">
-              <span>Total</span>
-              <span>₱{{ subtotal.toFixed(2) }}</span>
+          <div class="flex-1 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-4"></div>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg">
+              2
+            </div>
+            <span class="font-semibold text-indigo-600">Checkout</span>
+          </div>
+          <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center font-bold">
+              3
+            </div>
+            <span class="font-medium text-gray-500">Confirmation</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Checkout Form -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- Shipping Information -->
+          <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">📦</span>
+              </div>
+              <h2 class="text-2xl font-bold text-gray-900">Shipping Information</h2>
+            </div>
+            
+            <form @submit.prevent class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="John" 
+                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                    required 
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="Doe" 
+                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                    required 
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                <input 
+                  type="email" 
+                  placeholder="john.doe@example.com" 
+                  class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                  required 
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+                <input 
+                  type="tel" 
+                  placeholder="+63 912 345 6789" 
+                  class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                  required 
+                />
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Street Address</label>
+                <input 
+                  type="text" 
+                  placeholder="123 Main Street, Apt 4B" 
+                  class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                  required 
+                />
+              </div>
+              
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">City</label>
+                  <input 
+                    type="text" 
+                    placeholder="Makati" 
+                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                    required 
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">ZIP Code</label>
+                  <input 
+                    type="text" 
+                    placeholder="1200" 
+                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                    required 
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Payment Information -->
+          <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                <span class="text-2xl">💳</span>
+              </div>
+              <h2 class="text-2xl font-bold text-gray-900">Payment Method</h2>
+            </div>
+            
+            <div class="space-y-4">
+              <div class="border-2 border-indigo-600 bg-indigo-50 rounded-xl p-4 cursor-pointer">
+                <div class="flex items-center gap-3">
+                  <div class="w-5 h-5 bg-indigo-600 rounded-full flex items-center justify-center">
+                    <div class="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                  <span class="font-semibold text-gray-900">Credit / Debit Card</span>
+                </div>
+              </div>
+              
+              <div class="border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-gray-300 transition opacity-50">
+                <div class="flex items-center gap-3">
+                  <div class="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                  <span class="font-semibold text-gray-500">PayPal (Unavailable)</span>
+                </div>
+              </div>
+              
+              <div class="border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-gray-300 transition opacity-50">
+                <div class="flex items-center gap-3">
+                  <div class="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                  <span class="font-semibold text-gray-500">Cash on Delivery (Unavailable)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+              <p class="text-sm text-yellow-800 flex items-start gap-2">
+                <span class="text-lg">ℹ️</span>
+                <span><strong>Demo Mode:</strong> This is a static demonstration. Payment processing is not available.</span>
+              </p>
             </div>
           </div>
         </div>
         
-        <!-- Checkout Form -->
-        <div class="bg-white rounded-lg shadow p-8">
-          <h2 class="text-2xl font-bold mb-6">Shipping Information</h2>
-          <form @submit.prevent class="space-y-6">
-            <div class="grid grid-cols-2 gap-4">
-              <input type="text" placeholder="First Name" class="border rounded-lg px-4 py-3" required />
-              <input type="text" placeholder="Last Name" class="border rounded-lg px-4 py-3" required />
+        <!-- Order Summary -->
+        <div class="lg:col-span-1">
+          <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl shadow-2xl p-8 text-white sticky top-24">
+            <h2 class="text-2xl font-bold mb-6">Order Summary</h2>
+            
+            <div class="space-y-4 mb-6 max-h-64 overflow-y-auto pr-3 custom-scrollbar">
+              <div v-for="item in cartItems" :key="item.id" class="flex gap-3 pb-4 border-b border-white/20">
+                <img 
+                  :src="item.thumbnail || item.images?.[0]" 
+                  :alt="item.title || item.name" 
+                  class="w-16 h-16 object-cover rounded-lg"
+                />
+                <div class="flex-1">
+                  <p class="font-semibold text-sm line-clamp-2">{{ item.title || item.name }}</p>
+                  <p class="text-sm text-indigo-200 mt-1">Qty: {{ item.quantity }}</p>
+                </div>
+                <p class="font-bold text-sm">₱{{ (item.price * item.quantity).toFixed(2) }}</p>
+              </div>
             </div>
-            <input type="email" placeholder="Email" class="w-full border rounded-lg px-4 py-3" required />
-            <input type="text" placeholder="Address" class="w-full border rounded-lg px-4 py-3" required />
-            <div class="grid grid-cols-2 gap-4">
-              <input type="text" placeholder="City" class="border rounded-lg px-4 py-3" required />
-              <input type="text" placeholder="ZIP Code" class="border rounded-lg px-4 py-3" required />
+            
+            <div class="space-y-3 mb-6 border-t border-white/20 pt-6">
+              <div class="flex justify-between text-lg">
+                <span class="text-indigo-100">Subtotal</span>
+                <span class="font-bold">₱{{ subtotal.toFixed(2) }}</span>
+              </div>
+              <div class="flex justify-between text-lg">
+                <span class="text-indigo-100">Shipping</span>
+                <span class="font-bold text-green-300">Free</span>
+              </div>
+              <div class="flex justify-between text-lg">
+                <span class="text-indigo-100">Tax (12%)</span>
+                <span class="font-bold">₱{{ (subtotal * 0.12).toFixed(2) }}</span>
+              </div>
+            </div>
+            
+            <div class="border-t border-white/30 pt-6 mb-6">
+              <div class="flex justify-between text-2xl font-bold">
+                <span>Total</span>
+                <span>₱{{ (subtotal * 1.12).toFixed(2) }}</span>
+              </div>
             </div>
             
             <button 
-              type="submit"
+              type="button"
               disabled
-              class="w-full bg-gray-400 text-white py-4 rounded-lg font-semibold cursor-not-allowed opacity-60"
+              class="w-full bg-white/20 backdrop-blur-sm text-white py-4 rounded-xl font-bold cursor-not-allowed border-2 border-white/30 mb-3"
             >
-              Place Order (Demo Only)
+              🔒 Place Order (Demo Only)
             </button>
-            <p class="text-center text-sm text-gray-600 mt-4">
-              This is a static demo — orders cannot be placed.
-            </p>
-          </form>
+            
+            <router-link 
+              to="/cart"
+              class="block text-center text-white/80 hover:text-white transition text-sm font-medium"
+            >
+              ← Back to Cart
+            </router-link>
+
+            <!-- Security Badges -->
+            <div class="mt-8 pt-6 border-t border-white/20 space-y-2">
+              <div class="flex items-center gap-2 text-sm text-indigo-100">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span>SSL Secure Payment</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm text-indigo-100">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Money-Back Guarantee</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -67,3 +252,28 @@ const subtotal = computed(() =>
   cartStore.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 )
 </script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 4px 0;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+</style>

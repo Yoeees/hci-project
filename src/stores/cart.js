@@ -1,24 +1,42 @@
 // src/stores/cart.js
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
     items: [],
-    toasts: ref([]) // ← New: for notifications
+    toasts: [] 
   }),
 
+  getters: {
+    // Computed total items count
+    itemCount: (state) => state.items.reduce((sum, item) => sum + item.quantity, 0),
+    
+    // Computed subtotal
+    subtotal: (state) => state.items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+  },
+
   actions: {
-    addItem(product) {
+    addItem(product, quantity = 1) {
       const existing = this.items.find(item => item.id === product.id)
       if (existing) {
-        existing.quantity++
+        existing.quantity += quantity
       } else {
-        this.items.push({ ...product, quantity: 1 })
+        // Ensure we have the correct property names (title vs name)
+        this.items.push({ 
+          ...product, 
+          name: product.name || product.title,
+          title: product.title || product.name,
+          quantity 
+        })
       }
 
-      // Trigger beautiful toast
-      this.showToast(`${product.title} added to cart!`, product.thumbnail || product.images?.[0])
+      // Trigger beautiful toast with quantity info
+      const itemName = product.title || product.name
+      const message = quantity > 1 
+        ? `${quantity}x ${itemName} added to cart!` 
+        : `${itemName} added to cart!`
+      
+      this.showToast(message, product.thumbnail || product.images?.[0])
     },
 
     showToast(message, imageUrl = null) {
@@ -47,7 +65,9 @@ export const useCartStore = defineStore('cart', {
     removeItem(id) {
       const item = this.items.find(item => item.id === id)
       if (item) {
-        this.showToast(`${item.title} removed from cart`, item.thumbnail || item.images?.[0])      }
+        const itemName = item.title || item.name
+        this.showToast(`${itemName} removed from cart`, item.thumbnail || item.images?.[0])
+      }
       this.items = this.items.filter(item => item.id !== id)
     }
   },
