@@ -214,7 +214,6 @@
 
             <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
               <p class="text-sm text-yellow-800 flex items-start gap-2">
-                <span class="text-lg">ℹ️</span>
                 <span><strong>Demo Mode:</strong> This is a static demonstration. Payment processing is not available.</span>
               </p>
             </div>
@@ -268,7 +267,7 @@
               disabled
               class="w-full bg-white/20 backdrop-blur-sm text-white py-4 rounded-xl font-bold cursor-not-allowed border-2 border-white/30 mb-3"
             >
-              🔒 Place Order (Demo Only)
+             Place Order (Demo Only)
             </button>
             
             <router-link 
