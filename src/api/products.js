@@ -1,4 +1,3 @@
-// src/api/products.js
 
 const BASE_URL = 'https://dummyjson.com'
 

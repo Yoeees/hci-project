@@ -1,4 +1,3 @@
-<!-- src/pages/ProductDetails.vue -->
 <template>
   <div class="py-12 bg-gradient-to-b from-gray-50 to-white min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

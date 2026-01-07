@@ -1,4 +1,3 @@
-<!-- src/pages/Cart.vue -->
 <template>
   <div class="py-16 bg-gradient-to-b from-gray-50 to-white min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,6 +50,7 @@
               
               <router-link 
                 to="/checkout"
+                @click="handleCheckout"
                 class="block text-center bg-white text-indigo-600 py-4 rounded-xl font-bold hover:shadow-2xl transition-all transform hover:scale-105 mb-4"
               >
                 Proceed to Checkout
@@ -105,9 +105,11 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import CartItem from '../components/CartItem.vue'
 import { useCartStore } from '../stores/cart'
 
+const router = useRouter()
 const cartStore = useCartStore()
 
 const cartItems = computed(() => cartStore.items)
@@ -115,6 +117,14 @@ const cartItems = computed(() => cartStore.items)
 const subtotal = computed(() => 
   cartStore.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 )
+
+const handleCheckout = (event) => {
+  // Prevent navigation if cart is empty
+  if (cartItems.value.length === 0) {
+    event.preventDefault()
+    alert('Your cart is empty! Please add items before checking out.')
+  }
+}
 </script>
 
 <style scoped>

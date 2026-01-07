@@ -1,10 +1,10 @@
-<!-- src/components/ProductCard.vue -->
 <template>
   <div class="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100">
     <div class="relative overflow-hidden bg-gray-100">
       <img 
         :src="product.thumbnail || product.images?.[0]" 
         :alt="product.name" 
+        @error="handleImageError"
         class="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-700"
       />
       <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-bold text-indigo-600 shadow-lg">
@@ -81,5 +81,10 @@ const formatCategory = (category) => {
 
 const addToCart = () => {
   cartStore.addItem(props.product)
+}
+
+const handleImageError = (event) => {
+  // Fallback to placeholder image if image fails to load
+  event.target.src = 'https://via.placeholder.com/400x400/4F46E5/FFFFFF?text=Product+Image'
 }
 </script>

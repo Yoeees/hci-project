@@ -1,4 +1,3 @@
-<!-- src/components/CartItem.vue -->
 <template>
   <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all p-6 flex gap-6 border border-gray-100 group">
     <div class="relative">

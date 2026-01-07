@@ -1,4 +1,3 @@
-<!-- src/components/CartToast.vue -->
 <template>
   <div class="fixed bottom-8 right-8 z-50 space-y-4 pointer-events-none">
     <TransitionGroup name="toast">

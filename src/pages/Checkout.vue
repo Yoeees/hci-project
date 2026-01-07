@@ -1,4 +1,3 @@
-<!-- src/pages/Checkout.vue -->
 <template>
   <div class="py-16 bg-gradient-to-b from-gray-50 to-white min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,25 +44,41 @@
               <h2 class="text-2xl font-bold text-gray-900">Shipping Information</h2>
             </div>
             
-            <form @submit.prevent class="space-y-6">
+            <form @submit.prevent="handleSubmit" class="space-y-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
                   <input 
                     type="text" 
+                    v-model="formData.firstName"
+                    @blur="validateField('firstName')"
                     placeholder="John" 
-                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                    :class="[
+                      'w-full border-2 rounded-xl px-4 py-3 focus:outline-none transition',
+                      errors.firstName 
+                        ? 'border-red-500 focus:ring-2 focus:ring-red-500' 
+                        : 'border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
+                    ]"
                     required 
                   />
+                  <p v-if="errors.firstName" class="text-red-600 text-sm mt-1">{{ errors.firstName }}</p>
                 </div>
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-2">Last Name</label>
                   <input 
                     type="text" 
+                    v-model="formData.lastName"
+                    @blur="validateField('lastName')"
                     placeholder="Doe" 
-                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                    :class="[
+                      'w-full border-2 rounded-xl px-4 py-3 focus:outline-none transition',
+                      errors.lastName 
+                        ? 'border-red-500 focus:ring-2 focus:ring-red-500' 
+                        : 'border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
+                    ]"
                     required 
                   />
+                  <p v-if="errors.lastName" class="text-red-600 text-sm mt-1">{{ errors.lastName }}</p>
                 </div>
               </div>
               
@@ -71,30 +86,55 @@
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
                 <input 
                   type="email" 
+                  v-model="formData.email"
+                  @blur="validateField('email')"
                   placeholder="john.doe@example.com" 
-                  class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                  :class="[
+                    'w-full border-2 rounded-xl px-4 py-3 focus:outline-none transition',
+                    errors.email 
+                      ? 'border-red-500 focus:ring-2 focus:ring-red-500' 
+                      : 'border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
+                  ]"
                   required 
                 />
+                <p v-if="errors.email" class="text-red-600 text-sm mt-1">{{ errors.email }}</p>
               </div>
               
               <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
                 <input 
                   type="tel" 
+                  v-model="formData.phone"
+                  @input="formatPhone"
+                  @blur="validateField('phone')"
                   placeholder="+63 912 345 6789" 
-                  class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                  :class="[
+                    'w-full border-2 rounded-xl px-4 py-3 focus:outline-none transition',
+                    errors.phone 
+                      ? 'border-red-500 focus:ring-2 focus:ring-red-500' 
+                      : 'border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
+                  ]"
                   required 
                 />
+                <p v-if="errors.phone" class="text-red-600 text-sm mt-1">{{ errors.phone }}</p>
               </div>
               
               <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Street Address</label>
                 <input 
                   type="text" 
+                  v-model="formData.address"
+                  @blur="validateField('address')"
                   placeholder="123 Main Street, Apt 4B" 
-                  class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                  :class="[
+                    'w-full border-2 rounded-xl px-4 py-3 focus:outline-none transition',
+                    errors.address 
+                      ? 'border-red-500 focus:ring-2 focus:ring-red-500' 
+                      : 'border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
+                  ]"
                   required 
                 />
+                <p v-if="errors.address" class="text-red-600 text-sm mt-1">{{ errors.address }}</p>
               </div>
               
               <div class="grid grid-cols-2 gap-4">
@@ -102,19 +142,37 @@
                   <label class="block text-sm font-semibold text-gray-700 mb-2">City</label>
                   <input 
                     type="text" 
+                    v-model="formData.city"
+                    @blur="validateField('city')"
                     placeholder="Makati" 
-                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                    :class="[
+                      'w-full border-2 rounded-xl px-4 py-3 focus:outline-none transition',
+                      errors.city 
+                        ? 'border-red-500 focus:ring-2 focus:ring-red-500' 
+                        : 'border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
+                    ]"
                     required 
                   />
+                  <p v-if="errors.city" class="text-red-600 text-sm mt-1">{{ errors.city }}</p>
                 </div>
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-2">ZIP Code</label>
                   <input 
                     type="text" 
+                    v-model="formData.zipCode"
+                    @input="formatZipCode"
+                    @blur="validateField('zipCode')"
                     placeholder="1200" 
-                    class="w-full border-2 border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" 
+                    maxlength="4"
+                    :class="[
+                      'w-full border-2 rounded-xl px-4 py-3 focus:outline-none transition',
+                      errors.zipCode 
+                        ? 'border-red-500 focus:ring-2 focus:ring-red-500' 
+                        : 'border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent'
+                    ]"
                     required 
                   />
+                  <p v-if="errors.zipCode" class="text-red-600 text-sm mt-1">{{ errors.zipCode }}</p>
                 </div>
               </div>
             </form>
@@ -243,7 +301,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, reactive } from 'vue'
 import { useCartStore } from '../stores/cart'
 
 const cartStore = useCartStore()
@@ -251,6 +309,115 @@ const cartItems = computed(() => cartStore.items)
 const subtotal = computed(() => 
   cartStore.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 )
+
+// Form data
+const formData = reactive({
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  address: '',
+  city: '',
+  zipCode: ''
+})
+
+// Error messages
+const errors = reactive({
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  address: '',
+  city: '',
+  zipCode: ''
+})
+
+// Validation functions
+const validateField = (field) => {
+  errors[field] = '' // Clear previous error
+
+  switch (field) {
+    case 'firstName':
+    case 'lastName':
+      if (!formData[field].trim()) {
+        errors[field] = 'This field is required'
+      } else if (formData[field].trim().length < 2) {
+        errors[field] = 'Must be at least 2 characters'
+      } else if (!/^[a-zA-Z\s]+$/.test(formData[field])) {
+        errors[field] = 'Only letters are allowed'
+      }
+      break
+
+    case 'email':
+      if (!formData.email.trim()) {
+        errors.email = 'Email is required'
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        errors.email = 'Please enter a valid email address'
+      }
+      break
+
+    case 'phone':
+      const phoneDigits = formData.phone.replace(/\D/g, '')
+      if (!formData.phone.trim()) {
+        errors.phone = 'Phone number is required'
+      } else if (phoneDigits.length < 10) {
+        errors.phone = 'Phone number must be at least 10 digits'
+      } else if (phoneDigits.length > 13) {
+        errors.phone = 'Phone number is too long'
+      }
+      break
+
+    case 'address':
+      if (!formData.address.trim()) {
+        errors.address = 'Address is required'
+      } else if (formData.address.trim().length < 5) {
+        errors.address = 'Please enter a complete address'
+      }
+      break
+
+    case 'city':
+      if (!formData.city.trim()) {
+        errors.city = 'City is required'
+      } else if (!/^[a-zA-Z\s]+$/.test(formData.city)) {
+        errors.city = 'Only letters are allowed'
+      }
+      break
+
+    case 'zipCode':
+      if (!formData.zipCode.trim()) {
+        errors.zipCode = 'ZIP code is required'
+      } else if (!/^\d{4}$/.test(formData.zipCode)) {
+        errors.zipCode = 'ZIP code must be 4 digits'
+      }
+      break
+  }
+}
+
+// Format phone to allow only numbers and common separators
+const formatPhone = (event) => {
+  // Allow only numbers, spaces, +, -, (, )
+  formData.phone = formData.phone.replace(/[^\d\s+()-]/g, '')
+}
+
+// Format ZIP code to allow only numbers
+const formatZipCode = (event) => {
+  formData.zipCode = formData.zipCode.replace(/\D/g, '')
+}
+
+// Validate all fields
+const validateAllFields = () => {
+  Object.keys(formData).forEach(field => validateField(field))
+  return !Object.values(errors).some(error => error !== '')
+}
+
+// Handle form submit (demo only)
+const handleSubmit = () => {
+  if (validateAllFields()) {
+    alert('✅ Form is valid! In a real application, this would process your order.')
+  } else {
+    alert('❌ Please fix the errors in the form before submitting.')
+  }
+}
 </script>
 
 <style scoped>

@@ -1,4 +1,3 @@
-<!-- src/pages/Home.vue -->
 <template>
   <div>
     <!-- Hero Section with Gradient Animation -->

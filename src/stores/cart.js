@@ -1,4 +1,3 @@
-// src/stores/cart.js
 import { defineStore } from 'pinia'
 
 export const useCartStore = defineStore('cart', {
@@ -30,7 +29,7 @@ export const useCartStore = defineStore('cart', {
         })
       }
 
-      // Trigger beautiful toast with quantity info
+      // Trigger toast
       const itemName = product.title || product.name
       const message = quantity > 1 
         ? `${quantity}x ${itemName} added to cart!` 

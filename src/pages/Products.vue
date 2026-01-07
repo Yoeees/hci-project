@@ -1,4 +1,3 @@
-<!-- src/pages/Products.vue -->
 <template>
   <div class="py-16 bg-gradient-to-b from-gray-50 to-white min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,8 +12,33 @@
           Browse through our carefully curated selection of premium products
         </p>
       </div>
-      
-      <div class="flex flex-col lg:flex-row gap-8">
+
+      <!-- Loading State -->
+      <div v-if="loading" class="flex flex-col items-center justify-center py-20">
+        <div class="relative w-20 h-20 mb-6">
+          <div class="absolute inset-0 border-4 border-indigo-200 rounded-full"></div>
+          <div class="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
+        </div>
+        <p class="text-xl font-semibold text-gray-700">Loading amazing products...</p>
+      </div>
+
+      <!-- Error State -->
+      <div v-else-if="error" class="text-center py-20">
+        <div class="w-32 h-32 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-8">
+          <span class="text-6xl">⚠️</span>
+        </div>
+        <p class="text-3xl font-bold text-gray-900 mb-4">Oops! Something went wrong</p>
+        <p class="text-xl text-gray-600 mb-8">{{ error }}</p>
+        <button 
+          @click="retryFetch"
+          class="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-10 py-4 rounded-full text-lg font-bold hover:shadow-2xl transition-all transform hover:scale-105"
+        >
+          Try Again
+        </button>
+      </div>
+
+      <!-- Main Content -->
+      <div v-else class="flex flex-col lg:flex-row gap-8">
         <!-- Sidebar Filter -->
         <aside class="lg:w-64 flex-shrink-0">
           <!-- Mobile Filter Toggle Button -->
@@ -85,14 +109,13 @@
               <button
                 v-for="category in categories"
                 :key="category"
-                @click="selectedCategory = category"
+                @click="selectedCategory = category; showFilters = false"
                 :class="[
                   'w-full text-left px-4 py-3 rounded-xl transition-all flex items-center justify-between group capitalize',
                   selectedCategory === category
                     ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md'
                     : 'hover:bg-gray-50 text-gray-700'
                 ]"
-                @click.once="showFilters = false" 
               >
                 <div class="flex items-center gap-3">
                   <span class="text-xl">{{ getCategoryIcon(category) }}</span>
@@ -176,11 +199,34 @@ import { fetchProducts } from '../api/products.js'
 const products = ref([])
 const sortBy = ref('featured')
 const selectedCategory = ref('all')
-const showFilters = ref(false) // For mobile toggle
+const showFilters = ref(false)
+const loading = ref(true)
+const error = ref(null)
 
-onMounted(async () => {
-  const data = await fetchProducts()
-  products.value = data.products || data
+const loadProducts = async () => {
+  loading.value = true
+  error.value = null
+  
+  try {
+    const data = await fetchProducts()
+    if (!data || !data.products || data.products.length === 0) {
+      throw new Error('No products available')
+    }
+    products.value = data.products
+  } catch (err) {
+    console.error('Error loading products:', err)
+    error.value = err.message || 'Failed to load products. Please check your internet connection.'
+  } finally {
+    loading.value = false
+  }
+}
+
+const retryFetch = () => {
+  loadProducts()
+}
+
+onMounted(() => {
+  loadProducts()
 })
 
 // Get unique categories from products
@@ -270,5 +316,13 @@ const filteredAndSortedProducts = computed(() => {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, #4338ca, #6d28d9);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 </style>

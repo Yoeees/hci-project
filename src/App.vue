@@ -1,4 +1,4 @@
-<!-- src/App.vue -->
+
 <template>
   <div class="min-h-screen flex flex-col">
     <Navbar />

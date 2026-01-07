@@ -1,4 +1,3 @@
-<!-- src/components/Footer.vue -->
 <template>
   <footer class="bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 text-white py-16 mt-20 relative overflow-hidden">
     <!-- Decorative Background -->
