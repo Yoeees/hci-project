@@ -46,6 +46,7 @@
         <!-- Support -->
         <div>
           <h4 class="text-lg font-bold mb-4 text-indigo-300">Support</h4>
+           <!-- char char paning links -->
           <ul class="space-y-3">
             <li><a href="#" class="text-gray-300 hover:text-white transition hover:translate-x-1 inline-block">Help Center</a></li>
             <li><a href="#" class="text-gray-300 hover:text-white transition hover:translate-x-1 inline-block">Shipping Info</a></li>

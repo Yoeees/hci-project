@@ -1,3 +1,4 @@
+<!-- src/pages/Home.vue -->
 <template>
   <div>
     <!-- Hero Section with Gradient Animation -->
@@ -18,14 +19,14 @@
         <div class="flex gap-4 justify-center flex-wrap">
           <router-link 
             to="/products"
-            class="bg-white text-indigo-600 px-10 py-4 rounded-full text-lg font-bold hover:bg-indigo-50 transition transform hover:scale-105 shadow-xl inline-flex items-center gap-2"
+            class="bg-white text-indigo-600 px-10 py-4 rounded-full text-lg font-bold hover:bg-indigo-50 transition transform hover:scale-105 shadow-xl flex items-center justify-center gap-2 cursor-pointer"
           >
             Shop Now
             <span class="text-xl">→</span>
           </router-link>
           <router-link 
             to="/products"
-            class="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition transform hover:scale-105 inline-block backdrop-blur-sm"
+            class="bg-transparent border-2 border-white text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition transform hover:scale-105 backdrop-blur-sm flex items-center justify-center cursor-pointer"
           >
             Browse Collection
           </router-link>
@@ -33,9 +34,9 @@
       </div>
       
       <!-- Decorative Elements -->
-      <div class="absolute top-20 left-10 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-      <div class="absolute top-40 right-10 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+      <div class="absolute top-20 left-10 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob pointer-events-none"></div>
+      <div class="absolute top-40 right-10 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000 pointer-events-none"></div>
+      <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000 pointer-events-none"></div>
     </section>
 
     <!-- Stats Section -->
