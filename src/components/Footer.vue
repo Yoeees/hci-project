@@ -21,13 +21,15 @@
           </p>
           <div class="flex gap-4">
             <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all transform hover:scale-110 backdrop-blur-sm">
-              <span class="text-lg">📘</span>
+              <span class="text-lg">  <Icon icon="mdi:facebook" width="24" />
+ </span>
             </a>
             <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all transform hover:scale-110 backdrop-blur-sm">
-              <span class="text-lg">🐦</span>
+              <span class="text-lg">    <Icon icon="mdi:instagram" width="22" /></span>
             </a>
             <a href="#" class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all transform hover:scale-110 backdrop-blur-sm">
-              <span class="text-lg">📷</span>
+              <span class="text-lg">    <Icon icon="mdi:twitter" width="22" />
+</span>
             </a>
           </div>
         </div>
@@ -72,3 +74,13 @@
     </div>
   </footer>
 </template>
+
+<script>
+
+  import { Icon } from '@iconify/vue'
+export default {
+  components: {
+    Icon
+  }
+}
+</script>
